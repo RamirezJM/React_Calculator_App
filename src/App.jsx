@@ -1,234 +1,71 @@
-/* import { useState, useRef } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+
+import { useState } from 'react';
+import "./App.css";
 
 function App() {
-  const inputRef = useRef(null); 
-  
-  const [result, setResult] = useState(0); 
- 
-  function plus(e) { 
-    e.preventDefault(); 
-    setResult((prevResult) => prevResult + Number(inputRef.current.value)); 
-    inputRef.current.value = ""
-  }; 
- 
-  function minus(e) {
-     e.preventDefault(); 
-    setResult((prevResult) => prevResult - Number(inputRef.current.value));
-    inputRef.current.value = "" 
-  };
- 
-  function times(e) { 
-    e.preventDefault(); 
-    setResult((prevResult) => prevResult * Number(inputRef.current.value));
-    inputRef.current.value = "" 
-  }; 
- 
-  function divide(e) { 
-    e.preventDefault(); 
-    setResult((prevResult) => prevResult / Number(inputRef.current.value));
-    inputRef.current.value = "" 
-  };
- 
-  function resetInput(e) { 
-    e.preventDefault();
-    inputRef.current.value = ""
-  }; 
- 
-  function resetResult(e) { 
-    e.preventDefault();
-    setResult(0);
-  }; 
- 
-  return ( 
-    <div className="App"> 
-      <div className='title'> 
-        <h1>Calculator</h1>
-        <img src={reactLogo} alt="react logo" /> 
-      </div> 
-      <form> 
-        <p>{result}</p> 
-        <input
-          pattern="[0-9]*" 
-          ref={inputRef} 
-          type="number" 
-          placeholder="Type a number" 
-        /> 
-        <button onClick={plus}>+</button>
-        <button onClick={minus}>-</button>
-        <button onClick={times}>*</button>
-        <button onClick={divide}>/</button>
-        <button onClick={resetInput}>Clear</button>
-        <button onClick={resetResult}>Reset Result</button> 
-        
-      </form> 
-    </div> 
-  ); 
+  const [calc, setCalc] = useState("");
+  const [result, setResult] = useState("");
+  const ops = ['/', '*', '-', '+', '.'];
 
-}
-export default App
- */
-/* import { useState, useRef } from 'react';
-import reactLogo from './assets/react.svg';
-import './App.css';
-
-function App() {
-  const inputRef = useRef(null);
-  const [result, setResult] = useState(0);
-  const [operator, setOperator] = useState(null);
-
-  function handleOperation(op) {
-    if (operator === null) {
-      setResult(Number(inputRef.current.value));
+  const createDigits = () => {
+    const digits = [];
+    for (let i = 1; i < 10; i++) {
+      digits.push(<button onClick={() => updateCalc(i.toString())} key={i}>{i}</button>);
     }
-    setOperator(op);
-    inputRef.current.value = '';
+    return digits;
   }
 
-  function calculate() {
-    const inputValue = Number(inputRef.current.value);
-    switch (operator) {
-      case '+':
-        setResult((prevResult) => prevResult + inputValue);
-        break;
-      case '-':
-        setResult((prevResult) => prevResult - inputValue);
-        break;
-      case '*':
-        setResult((prevResult) => prevResult * inputValue);
-        break;
-      case '/':
-        setResult((prevResult) => prevResult / inputValue);
-        break;
-      default:
-        break;
+  const updateCalc = (value) => {
+    if (
+      ops.includes(value) && calc === '' ||
+      ops.includes(value) && ops.includes(calc.slice(-1))
+    ) {
+      return;
     }
-    setOperator(null);
-    inputRef.current.value = '';
+
+    setCalc(calc + value);
+    if (!ops.includes(value)) {
+      setResult(eval(calc + value).toString());
+    }
   }
 
-  function resetInput(e) {
-    e.preventDefault();
-    inputRef.current.value = '';
+  const calculate = () => {
+    setCalc(eval(calc).toString());
   }
 
-  function resetResult(e) {
-    e.preventDefault();
-    setResult(0);
+  const deleteLast = () => {
+    if (calc == '') {
+    }
+    const value = calc.slice(0, -1);
+    setCalc(value);
   }
 
   return (
-    <div className="App">
-      <div className="title">
-        <h1>Calculator</h1>
-        <img src={reactLogo} alt="react logo" />
+    <>
+      <h1>Simplest Working Calculator</h1>
+      <div className="App">
+        <div className="calculator">
+          <div className="display">
+            <span>{result ? '(' + result + ')' : ''}</span> {calc || 0}
+          </div>
+          <div className="operators">
+            <button onClick={() => updateCalc('+')}>+</button>
+            <button onClick={() => updateCalc('-')}>-</button>
+            <button onClick={() => updateCalc('*')}>*</button>
+            <button onClick={() => updateCalc('/')}>/</button>
+            <button onClick={deleteLast}>DEL</button>
+          </div>
+          <div className="digits">
+            {createDigits()}
+            <button onClick={() => updateCalc('0')}>0</button>
+            <button onClick={() => updateCalc('.')}>.</button>
+            <button onClick={calculate}>=</button>
+          </div>
+        </div>
       </div>
-      <form>
-        <p>{result}</p>
-        <input
-          pattern="[0-9]*"
-          ref={inputRef}
-          type="number"
-          placeholder="Type a number"
-        />
-        <button onClick={() => handleOperation('+')}>+</button>
-        <button onClick={() => handleOperation('-')}>-</button>
-        <button onClick={() => handleOperation('*')}>*</button>
-        <button onClick={() => handleOperation('/')}>/</button>
-        <button onClick={calculate}>=</button>
-        <button onClick={resetInput}>Clear</button>
-        <button onClick={resetResult}>Reset Result</button>
-      </form>
-    </div>
+    </>
+
   );
 }
 
-export default App; */
-
-import {
-  useState,
-  useRef
-} from "react"; 
-import "./App.css";
-
-function App() { 
-  const inputRef = useRef(null); 
-  const resultRef = useRef(null); 
-  const [result, setResult] = useState(0); 
- 
-  function plus(e) { 
-    e.preventDefault(); 
-    const inputValue = Number(inputRef.current.value);
-    console.log(inputValue)
-    setResult((prevResult) => prevResult + inputValue); 
-    inputRef.current.value = '';
-   
-  }; 
- 
-  function minus(e) {
-    e.preventDefault();
-    const inputValue = Number(inputRef.current.value); 
-    console.log(inputValue)
-    setResult((prevResult) => prevResult - inputValue); 
-  	inputRef.current.value = '';
-  };
- 
-  function times(e) { 
-    e.preventDefault(); 
-    const inputValue = Number(inputRef.current.value);
-    console.log(inputValue)
-    setResult((prevResult) => prevResult * inputValue);
-    inputRef.current.value = ''; 
-  }; 
- 
-  function divide(e) { 
-    e.preventDefault();
-    const inputValue = Number(inputRef.current.value); 
-    console.log(inputValue)
-    if(inputValue === 0){
-      alert("The number can't be 0")
-    }else{
-    setResult((prevResult) => prevResult / inputValue);
-    inputRef.current.value = '';
-  } 
-  };
- 
-  function resetInput(e) { 
-    e.preventDefault();
-    inputRef.current.value = null;
-  }; 
- 
-  function resetResult(e) { 
-  	e.preventDefault();
-    setResult(0);
-  }; 
- 
-  return ( 
-    <div className="App"> 
-      <div> 
-        <h1>Simplest Working Calculator</h1> 
-      </div> 
-      <form> 
-        <p ref={resultRef} > 
-        {result} 
-        </p> 
-        <input
-          pattern="[0-9]" 
-          ref={inputRef} 
-          type="number" 
-          placeholder="Type a number" 
-        /> 
-        <button onClick={plus}>add</button>
-        <button onClick={minus}>rest</button>
-        <button onClick={times}>multiply</button>
-        <button onClick={divide}>divide</button>
-        <button onClick={resetInput}>Reset Input</button>
-        <button onClick={resetResult}>Reset Result</button> 
-       
-      </form> 
-    </div> 
-  ); 
-} 
- 
-export default App; 
+export default App;

@@ -2,46 +2,78 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: "Roboto Mono", monospace;
+}
 
+h1 {
+  text-align: center;
+  margin-top: 2em;
 }
-body{
-  display: block;
-}
-.App{
-  margin-top: 2rem;
-  border: 1px solid red;
-  padding: 1em;
-  max-width: 800px;
-}
-.title{
+
+.App {
   display: flex;
+  min-height: 80vh;
+  align-items: center;
   justify-content: center;
-  gap: 1em;
-  margin-block: 1em;
 }
 
-input {
-  display: block;
-  font-size: 2rem;
+.calculator {
+  width: 100%;
+  max-width: 400px;
+  background-color: #131a26;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0px 2px 64px rgba(0, 0, 0, 0.2);
+}
+
+.display {
   padding: .5em;
-  margin-bottom: 1em;
-  
+  text-align: right;
+  background-color: #eaecee;
+  color: #131a26;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border: solid 1px green;
+  margin: .5em;
 }
 
+.display span {
+  font-size: 1rem;
+  color: #888;
+}
+
+.operators {
+  display: flex;
+}
 
 button {
-  border: 1px solid gray;
-  background: whitesmoke;
-  color: black;
-  font-size: 1.5rem;
-  font-weight: 800;
+  appearance: none;
+  outline: none;
+  border: solid 1px #eaecee;
+  color: #FFF;
   padding: 1em;
-  margin-inline: .5em; 
-  
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: 0.4s;
 }
-button:nth-last-child(2),
-button:nth-last-child(1) {
-  background: tomato;
-  color: white;
+
+button:hover {
+  opacity: 0.9;
+}
+
+.operators button {
+  flex: 1 1 0%;
+  background-color: #34495e;
+  font-weight: 700;
+}
+
+.digits {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.digits button {
+  flex: 1 1 33.333%;
+  max-width: 33.333%;
+  background-color: #131a26;
 }
